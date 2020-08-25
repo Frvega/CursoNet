@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 namespace CursoNetCore.Repository
 {
     public class CategoriaRepository : ICategoriaRepository
+
     {
         private readonly CatalogoContext _catalogoContext;
 
