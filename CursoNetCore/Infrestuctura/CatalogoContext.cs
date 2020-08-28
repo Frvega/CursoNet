@@ -15,5 +15,7 @@ namespace CursoNetCore.Infrestuctura
         }
 
         public DbSet<Categoria> Categoria {get;set;}
+        public DbSet<Marca> Marca { get; set; }
+        public DbSet<Usuario> Usuario { get; set; }
     }
 }
