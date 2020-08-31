@@ -4,14 +4,16 @@ using CursoNetCore.Infrestuctura;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CursoNetCore.Migrations
 {
     [DbContext(typeof(CatalogoContext))]
-    partial class CatalogoContextModelSnapshot : ModelSnapshot
+    [Migration("20200828190241_TerceraMigration")]
+    partial class TerceraMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -68,7 +70,7 @@ namespace CursoNetCore.Migrations
                     b.Property<byte[]>("HashPassword")
                         .HasColumnType("varbinary(max)");
 
-                    b.Property<byte[]>("SaltPassword")
+                    b.Property<byte[]>("SaltPass")
                         .HasColumnType("varbinary(max)");
 
                     b.HasKey("IdUsuario");

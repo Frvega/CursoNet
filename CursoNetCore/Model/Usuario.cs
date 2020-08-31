@@ -11,8 +11,9 @@ namespace CursoNetCore.Model
         [Key]
         public int IdUsuario { get; set; }
         public byte[] HashPassword { get; set; }
-        public byte[] SaltPass { get; set; }
-        public string Correo { get; set; }
+        public byte[] SaltPassword { get; set; }
+        public string ClientId { get; set; }
+
 
     }
 }
