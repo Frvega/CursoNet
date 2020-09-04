@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -19,6 +21,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 
 namespace CursoNetCore
 {
@@ -39,7 +42,8 @@ namespace CursoNetCore
             services.AddAutoMapper(typeof(CategoriaMapper));
             services.AddAutoMapper(typeof(UsuarioMapper));
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options => {
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+            {
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
@@ -48,6 +52,32 @@ namespace CursoNetCore
                     ValidateAudience = false,
                 };
             });
+
+            services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("CatalogosApi", new OpenApiInfo()
+                {
+                    Title = "Catalogos Generales",
+                    Description = "Contiene los acatalogos genericos de aplicaciones",
+                    Version = "1.0",
+                    Contact = new Microsoft.OpenApi.Models.OpenApiContact()
+                    {
+                        Email = "email",
+                        Name = "nombre",
+
+                    },
+                    License = new Microsoft.OpenApi.Models.OpenApiLicense()
+                    {
+                        Name = "licencia",
+                        Url = new Uri("http://bsd.axsis.com")
+                    }
+                });
+                var XMLComentarios = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var ApiRutaComentarios = Path.Combine(AppContext.BaseDirectory, XMLComentarios);
+                options.IncludeXmlComments(ApiRutaComentarios);
+            });
+
+
 
             services.AddControllers();
         }
@@ -61,6 +91,13 @@ namespace CursoNetCore
             }
 
             app.UseHttpsRedirection();
+            app.UseSwagger();
+            app.UseSwaggerUI(options =>
+            {
+                options.SwaggerEndpoint("/swagger/CatalogosApi/swagger.json", "API Usuarios");
+                options.RoutePrefix = string.Empty;
+
+            });
 
             app.UseRouting();
 
